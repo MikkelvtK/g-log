@@ -1,8 +1,10 @@
 #include <stdio.h>
 #include <getopt.h>
 #include <stdlib.h>
+#include <string.h>
 
 const char *FILEPATH = "gamelog.csv";
+const char *COLUMNS = "index,game,status,addedOn,updatedOn,";
 
 
 int main(int argc, char *argv[]) {
@@ -19,6 +21,13 @@ int main(int argc, char *argv[]) {
         printf("Could not open data file\n");
         return 1;
     }
+    
+    // Create columns if empty file
+    fseek(file, 0, SEEK_END);
+    if (ftell(file) == 0) {
+        fwrite(COLUMNS, sizeof(char), strlen(COLUMNS), file);
+    }
+    rewind(file);
 
     // Free memory for flag
     int *opt = malloc(sizeof(char));
