@@ -10,9 +10,6 @@ int main(int argc, char *argv[]) {
         return 1;
     }
 
-    // Initialise variable for index
-    int option_index = 0;
-
     // Free memory for flag
     int *opt = malloc(sizeof(char));
     if (opt == NULL) {
@@ -31,54 +28,50 @@ int main(int argc, char *argv[]) {
         {0, 0, 0, 0},
     };
 
-    // Parse option
-    getopt_long(argc, argv, "a:r:u:l::", long_options, &option_index);
+    // Initialise variable for index
+    int option_index = 0;
 
-    // Ensure option is valid
-    if (*opt == '?') {
-        printf("Invalid option\n");
-        free(opt);
-        return 3;
-    }
-
-    // Ensure only 1 option entered
+    // Parse option in command line
     if (getopt_long(argc, argv, "a:r:u:l::", long_options, &option_index) != -1) {
-        printf("Only one option allowed\n");
-        free(opt);
-        return 4;
-    }
 
-    switch(*opt) {
+        switch(*opt) {
 
-        // Add game 
-        case 'a':
-            printf("Option --add selected\n");
-            break;
+            // Add game 
+            case 'a':
+                printf("Option --add selected\n");
+                break;
 
-        // Remove game
-        case 'r':
-            printf("Option --remove selected\n");
-            break;
-        
-        // update game
-        case 'u':
-            printf("Option --update selected\n");
-            break;
+            // Remove game
+            case 'r':
+                printf("Option --remove selected\n");
+                break;
+            
+            // update game
+            case 'u':
+                printf("Option --update selected\n");
+                break;
 
-        // Show list of games
-        case 'l':
-            printf("Option --list selected\n");
-            break;
+            // Show list of games
+            case 'l':
+                printf("Option --list selected\n");
+                break;
 
-        // Show version
-        case 'v':
-            printf("Option --version selected\n");
-            break;
+            // Show version
+            case 'v':
+                printf("Option --version selected\n");
+                break;
 
-        // Show help
-        case 'h':
-            printf("Option --help selected\n");
-            break;
+            // Show help
+            case 'h':
+                printf("Option --help selected\n");
+                break;
+
+            // Default when option is not recognized
+            default: 
+                printf("Use --help to look up valid commands\n");
+                free(opt);
+                return 1;
+        }   
     }
 
     free(opt);
