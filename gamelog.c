@@ -2,6 +2,9 @@
 #include <getopt.h>
 #include <stdlib.h>
 
+const char *FILEPATH = "gamelog.csv";
+
+
 int main(int argc, char *argv[]) {
 
     // Ensure command is given
@@ -9,11 +12,19 @@ int main(int argc, char *argv[]) {
         printf("No command given\n");
         return 1;
     }
+    
+    // Open csv file
+    FILE *file = fopen(FILEPATH, "a");
+    if (file == NULL) {
+        printf("Could not open data file\n");
+        return 1;
+    }
 
     // Free memory for flag
     int *opt = malloc(sizeof(char));
     if (opt == NULL) {
         printf("Could not allocate memory for option\n");
+        fclose(file);
         return 2;
     }
 
@@ -69,11 +80,13 @@ int main(int argc, char *argv[]) {
             // Default when option is not recognized
             default: 
                 printf("Use --help to look up valid commands\n");
+                fclose(file);
                 free(opt);
                 return 1;
         }   
     }
 
+    fclose(file);
     free(opt);
     return 0;
 }
