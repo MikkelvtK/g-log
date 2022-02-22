@@ -6,24 +6,62 @@
 // Initialise linked list
 node *data = NULL;
 
-int insert_data(entry g) {
+void insert_data(entry g) {
 
     // Allocate memory for new node
     node *new_entry = malloc(sizeof(node));
     if (new_entry == NULL) {
-        return 1;
+        return;
     }
 
     // Fill new node with data
     new_entry->game = g;
 
-    // Set new node as head
+    // Add new node to list
     new_entry->next = data;
     data = new_entry;
 
     // Set indices
     set_index(data, 0);
-    return 0;
+}
+
+// ---- Add remove_data function
+void remove_data(int i) {
+
+    // Initialise temp and cursor nodes
+    node *tmp = NULL;
+    node *cursor = NULL;
+
+    // Set temp and cursor to head
+    tmp = data;
+    cursor = data;
+
+    // Check if head itself holds index
+    if (cursor != NULL && cursor->index == i) {
+        data = cursor->next;
+
+        // Free node with index
+        free(cursor);
+
+        // Set new indices
+        set_index(data, 0);
+        return;
+    }
+
+    // Search for node with index
+    while (cursor != NULL && cursor->index != i) {
+            tmp = cursor;
+            cursor = cursor->next;
+    }
+
+    // Unlink node with index
+    tmp->next = cursor->next;
+
+    // Free node with index
+    free(cursor);
+
+    // Set new indices
+    set_index(data, 0);
 }
 
 // Checker function for testing

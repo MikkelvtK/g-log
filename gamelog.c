@@ -20,6 +20,27 @@ int main(int argc, char *argv[]) {
 
     // ----- insert load data function
 
+    printf("Before removing:\n");
+    entry game1 = {"God of War", "Finished", "Today", "Today"};
+    entry game2 = {"Cyberpunk 2077", "Finished", "Today", "Today"};
+    entry game3 = {"Outer Worlds", "Finished", "Today", "Today"};
+    entry game4 = {"Sekiro", "Finished", "Today", "Today"};
+
+    insert_data(game1);
+    insert_data(game2);
+    insert_data(game3);
+    insert_data(game4);
+
+    print_data();
+
+    printf("After removing:\n");
+
+    remove_data(2);
+    print_data();
+
+
+
+
     // Allocate memory for flag
     int *opt = malloc(sizeof(char));
     if (opt == NULL) {

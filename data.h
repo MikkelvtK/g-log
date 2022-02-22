@@ -5,7 +5,7 @@
 // Represents a game entry in the backlog
 typedef struct {
     char name[LENGTH];
-    char status[LENGTH];
+    char bucket[LENGTH];
     char added_on[LENGTH];
     char updated_on[LENGTH];
 } entry;
@@ -18,7 +18,8 @@ typedef struct node {
 } node;
 
 // Blueprints for functions
-int insert_data(entry g);
+void insert_data(entry g);
+void remove_data(int i);
 void print_data();
 int unload_data();
 void set_index(node *n, int i);

@@ -3,4 +3,4 @@
 
 #include "helpers.h"
 
-const char *STATUS[4] = {"Backlog", "In progress", "Finished", "Paused"};
+const char *BUCKETS[4] = {"Backlog", "In progress", "Finished", "Paused"};
