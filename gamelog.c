@@ -4,6 +4,9 @@
 #include <string.h>
 #include <time.h>
 
+#include "helpers.h"
+#include "options.h"
+
 const char *PATHNAME = "gamelog.txt";
 
 int main(int argc, char *argv[]) {
@@ -20,6 +23,9 @@ int main(int argc, char *argv[]) {
         printf("Could not allocate memory for option\n");
         return 2;
     }
+
+    // Initialise linked list
+    node *data = NULL;
 
     // ----- insert load data function
 
