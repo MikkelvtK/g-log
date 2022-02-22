@@ -6,6 +6,7 @@
 
 #include "helpers.h"
 #include "options.h"
+#include "data.h"
 
 const char *PATHNAME = "gamelog.txt";
 
@@ -17,17 +18,14 @@ int main(int argc, char *argv[]) {
         return 1;
     }
 
+    // ----- insert load data function
+
     // Free memory for flag
     int *opt = malloc(sizeof(char));
     if (opt == NULL) {
         printf("Could not allocate memory for option\n");
-        return 2;
+        return 1;
     }
-
-    // Initialise linked list
-    node *data = NULL;
-
-    // ----- insert load data function
 
     // Create command options
     struct option long_options[] = {
