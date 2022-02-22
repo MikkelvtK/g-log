@@ -11,6 +11,7 @@ void insert_data(entry g) {
     // Allocate memory for new node
     node *new_entry = malloc(sizeof(node));
     if (new_entry == NULL) {
+        printf("Failed to allocate memory\n");
         return;
     }
 
@@ -20,13 +21,16 @@ void insert_data(entry g) {
     // Add new node to list
     new_entry->next = data;
     data = new_entry;
-
-    // Set indices
     set_index(data, 0);
 }
 
-// ---- Add remove_data function
 void remove_data(int i) {
+
+    // NULL check
+    if (data == NULL) {
+        printf("There is nothing to remove\n");
+        return;
+    }
 
     // Initialise temp and cursor nodes
     node *tmp = NULL;
@@ -36,14 +40,10 @@ void remove_data(int i) {
     tmp = data;
     cursor = data;
 
-    // Check if head itself holds index
+    // Remove node if head itself has index
     if (cursor != NULL && cursor->index == i) {
         data = cursor->next;
-
-        // Free node with index
         free(cursor);
-
-        // Set new indices
         set_index(data, 0);
         return;
     }
@@ -54,13 +54,9 @@ void remove_data(int i) {
             cursor = cursor->next;
     }
 
-    // Unlink node with index
+    // Remove node with index
     tmp->next = cursor->next;
-
-    // Free node with index
     free(cursor);
-
-    // Set new indices
     set_index(data, 0);
 }
 
@@ -75,7 +71,13 @@ void print_data() {
     }
 }
 
-int unload_data() {
+void unload_data() {
+
+    // NULL check
+    if (data == NULL) {
+        printf("There is nothing to unload\n");
+        return;
+    }
 
     // Initialise temp and cursor nodes
     node *tmp = NULL;
@@ -87,16 +89,11 @@ int unload_data() {
 
     while (cursor != NULL) {
 
-        // Set cursor to next node
+        // Free memory of current node
         cursor = cursor->next;
-
-        // Free temp's node
         free(tmp);
-
-        // Set tmp to cursor
         tmp = cursor;
     }
-    return 0;
 }
 
 void set_index(node *n, int i) {

@@ -21,5 +21,5 @@ typedef struct node {
 void insert_data(entry g);
 void remove_data(int i);
 void print_data();
-int unload_data();
+void unload_data();
 void set_index(node *n, int i);
