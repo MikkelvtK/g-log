@@ -45,12 +45,14 @@ int unload_data() {
     cursor = data;
 
     while (cursor != NULL) {
-        
+
         // Set cursor to next node
         cursor = cursor->next;
 
         // Free temp's node
         free(tmp);
+
+        // Set tmp to cursor
         tmp = cursor;
     }
     return 0;
