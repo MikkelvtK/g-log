@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
 
 #include "data.h"
 
@@ -115,3 +116,42 @@ void set_index(node *n, int i) {
     // Set index of current node
     n->index = i;
 }
+
+void save_to_file(FILE *f, char *path) {
+
+    // Open file to save data
+    f = fopen(path, "w");
+    if (f == NULL) {
+        printf("Could not open file\n");
+        return;
+    }
+
+    // Initialise temp node
+    node *tmp = NULL;
+    tmp = data;
+
+    while (tmp != NULL) {   
+
+        // Get data from node
+        char *name = tmp->game.name;
+        char *bucket = tmp->game.bucket;
+        char *added = tmp->game.added_on;
+        char *updated = tmp->game.updated_on;
+
+        // Format data
+        int size = snprintf(NULL, 0, "%s;%s;%s;%s;\n", name, bucket, added, updated);
+        char *buffer = malloc(size);
+        sprintf(buffer, "%s;%s;%s;%s;\n", name, bucket, added, updated);
+
+        // Write to file
+        fwrite(buffer, size, 1, f);
+        free(buffer);
+
+        // Get next node
+        tmp = tmp->next;
+    }
+    fclose(f);
+}
+
+
+// ---- Create load_from_file function

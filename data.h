@@ -23,3 +23,4 @@ void remove_data(int i);
 void print_data();
 void unload_data();
 void set_index(node *n, int i);
+void save_to_file(FILE *f, char *path);

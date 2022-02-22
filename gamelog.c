@@ -8,7 +8,7 @@
 #include "options.h"
 #include "data.h"
 
-const char *PATHNAME = "gamelog.txt";
+char *PATHNAME = "gamelog.txt";
 
 int main(int argc, char *argv[]) {
 
@@ -25,18 +25,24 @@ int main(int argc, char *argv[]) {
     entry game2 = {"Cyberpunk 2077", "Finished", "Today", "Today"};
     entry game3 = {"Outer Worlds", "Finished", "Today", "Today"};
     entry game4 = {"Sekiro", "Finished", "Today", "Today"};
+    entry game5 = {"Age of Empire 4", "Finished", "Today", "Today"};
 
     insert_data(game1);
     insert_data(game2);
     insert_data(game3);
     insert_data(game4);
+    insert_data(game5);
 
     print_data();
+
+    FILE *file = NULL;
+    save_to_file(file, PATHNAME);
 
     printf("After removing:\n");
 
-    remove_data(4);
+    remove_data(1);
     print_data();
+    unload_data();
 
 
 
