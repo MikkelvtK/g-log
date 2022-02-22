@@ -1,6 +1,6 @@
 
 // Max length for properties
-#define LENGTH 255
+#define LENGTH 50
 
 // Represents a game entry in the backlog
 typedef struct {
@@ -24,3 +24,4 @@ void print_data();
 void unload_data();
 void set_index(node *n, int i);
 void save_to_file(FILE *f, char *path);
+void load_from_file(FILE *f, char *path);

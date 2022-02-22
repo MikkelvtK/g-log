@@ -18,34 +18,9 @@ int main(int argc, char *argv[]) {
         return 1;
     }
 
-    // ----- insert load data function
-
-    printf("Before removing:\n");
-    entry game1 = {"God of War", "Finished", "Today", "Today"};
-    entry game2 = {"Cyberpunk 2077", "Finished", "Today", "Today"};
-    entry game3 = {"Outer Worlds", "Finished", "Today", "Today"};
-    entry game4 = {"Sekiro", "Finished", "Today", "Today"};
-    entry game5 = {"Age of Empire 4", "Finished", "Today", "Today"};
-
-    insert_data(game1);
-    insert_data(game2);
-    insert_data(game3);
-    insert_data(game4);
-    insert_data(game5);
-
-    print_data();
-
+    // Load data from file
     FILE *file = NULL;
-    save_to_file(file, PATHNAME);
-
-    printf("After removing:\n");
-
-    remove_data(1);
-    print_data();
-    unload_data();
-
-
-
+    load_from_file(file, PATHNAME);
 
     // Allocate memory for flag
     int *opt = malloc(sizeof(char));
@@ -113,8 +88,8 @@ int main(int argc, char *argv[]) {
         }   
     }
 
-    // ----- insert save data function
-
+    // Save data to file and close app
+    save_to_file(file, PATHNAME);
     free(opt);
     return 0;
 }

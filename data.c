@@ -22,6 +22,7 @@ void insert_data(entry g) {
     // Add new node to list
     new_entry->next = data;
     data = new_entry;
+
     set_index(data, 0);
 }
 
@@ -132,20 +133,8 @@ void save_to_file(FILE *f, char *path) {
 
     while (tmp != NULL) {   
 
-        // Get data from node
-        char *name = tmp->game.name;
-        char *bucket = tmp->game.bucket;
-        char *added = tmp->game.added_on;
-        char *updated = tmp->game.updated_on;
-
-        // Format data
-        int size = snprintf(NULL, 0, "%s;%s;%s;%s;\n", name, bucket, added, updated);
-        char *buffer = malloc(size);
-        sprintf(buffer, "%s;%s;%s;%s;\n", name, bucket, added, updated);
-
-        // Write to file
-        fwrite(buffer, size, 1, f);
-        free(buffer);
+        entry buffer = tmp->game;
+        fwrite(&buffer, sizeof(entry), 1, f);
 
         // Get next node
         tmp = tmp->next;
@@ -153,5 +142,20 @@ void save_to_file(FILE *f, char *path) {
     fclose(f);
 }
 
+// // ---- Create load_from_file function
+void load_from_file(FILE *f, char *path) {
 
-// ---- Create load_from_file function
+    f = fopen(path, "r");
+    if (f == NULL) {
+        printf("Could not open file\n");
+        return;
+    }
+
+    entry buffer;
+
+    while (fread(&buffer, sizeof(entry), 1, f)) {
+        insert_data(buffer);
+    }
+    
+    fclose(f);
+}
