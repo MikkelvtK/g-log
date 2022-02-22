@@ -54,6 +54,12 @@ void remove_data(int i) {
             cursor = cursor->next;
     }
 
+    // Return if node with index is not in list
+    if (cursor == NULL) {
+        printf("Index was not in list\n");
+        return;
+    }
+
     // Remove node with index
     tmp->next = cursor->next;
     free(cursor);

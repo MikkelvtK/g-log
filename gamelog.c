@@ -35,7 +35,7 @@ int main(int argc, char *argv[]) {
 
     printf("After removing:\n");
 
-    remove_data(2);
+    remove_data(4);
     print_data();
 
 
