@@ -6,29 +6,30 @@
 // Initialise linked list
 node *data = NULL;
 
-int insert_data(game_entry g) {
+int insert_data(entry g) {
 
     // Allocate memory for new node
     node *new_entry = malloc(sizeof(node));
     if (new_entry == NULL) {
-        printf("Could not allocate memory for new data\n");
         return 1;
     }
 
-    // Fill node with data
-    new_entry->entry = g;
+    // Fill new node with data
+    new_entry->game = g;
 
-    // Set new entry as first node
+    // Set new node as head
     new_entry->next = data;
     data = new_entry;
+    return 0;
 }
 
+// Checker function for testing
 void print_data() {
     
     node *tmp = data;
 
     while (tmp != NULL) {
-        printf("Title of the game: %s\n", tmp->entry.game);
+        printf("Title of the game: %s\n", tmp->game.name);
         tmp = tmp->next;
     }
 }

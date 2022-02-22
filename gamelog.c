@@ -20,7 +20,7 @@ int main(int argc, char *argv[]) {
 
     // ----- insert load data function
 
-    // Free memory for flag
+    // Allocate memory for flag
     int *opt = malloc(sizeof(char));
     if (opt == NULL) {
         printf("Could not allocate memory for option\n");
@@ -42,8 +42,10 @@ int main(int argc, char *argv[]) {
     int option_index = 0;
 
     // Parse option in command line
-    if (getopt_long(argc, argv, "a:r:u:l::", long_options, &option_index) != -1) {
+    if (getopt_long(argc, argv, "a:r:u:l::hv", long_options, &option_index) != -1) {
 
+        // ----- insert validate command function
+        
         switch(*opt) {
 
             // Add game 

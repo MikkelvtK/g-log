@@ -1,20 +1,22 @@
+
+// Max length for properties
 #define LENGTH 255
 
 // Represents a game entry in the backlog
 typedef struct {
-    char game[LENGTH];
+    char name[LENGTH];
     char status[LENGTH];
     char added_on[LENGTH];
     char updated_on[LENGTH];
-} game_entry;
+} entry;
 
 // Represents a node in a linked list
 typedef struct node {
-    game_entry entry;
+    entry game;
     struct node *next;
 } node;
 
-// Blueprints of functions
-int insert_data(game_entry g);
+// Blueprints for functions
+int insert_data(entry g);
 void print_data();
 int unload_data();
