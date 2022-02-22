@@ -2,10 +2,9 @@
 #include <getopt.h>
 #include <stdlib.h>
 #include <string.h>
+#include <time.h>
 
-const char *FILEPATH = "gamelog.csv";
-const char *COLUMNS = "index,game,status,addedOn,updatedOn,";
-
+const char *PATHNAME = "gamelog.txt";
 
 int main(int argc, char *argv[]) {
 
@@ -14,28 +13,15 @@ int main(int argc, char *argv[]) {
         printf("No command given\n");
         return 1;
     }
-    
-    // Open csv file
-    FILE *file = fopen(FILEPATH, "a");
-    if (file == NULL) {
-        printf("Could not open data file\n");
-        return 1;
-    }
-    
-    // Create columns if empty file
-    fseek(file, 0, SEEK_END);
-    if (ftell(file) == 0) {
-        fwrite(COLUMNS, sizeof(char), strlen(COLUMNS), file);
-    }
-    rewind(file);
 
     // Free memory for flag
     int *opt = malloc(sizeof(char));
     if (opt == NULL) {
         printf("Could not allocate memory for option\n");
-        fclose(file);
         return 2;
     }
+
+    // ----- insert load data function
 
     // Create command options
     struct option long_options[] = {
@@ -89,13 +75,13 @@ int main(int argc, char *argv[]) {
             // Default when option is not recognized
             default: 
                 printf("Use --help to look up valid commands\n");
-                fclose(file);
                 free(opt);
                 return 1;
         }   
     }
 
-    fclose(file);
+    // ----- insert save data function
+
     free(opt);
     return 0;
 }

@@ -58,5 +58,6 @@ dkms.conf
 # Other
 *.txt
 *.csv
+*.vscode
 
 # End of https://www.toptal.com/developers/gitignore/api/c
