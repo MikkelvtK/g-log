@@ -12,6 +12,7 @@ typedef struct {
 
 // Represents a node in a linked list
 typedef struct node {
+    int index;
     entry game;
     struct node *next;
 } node;
@@ -20,3 +21,4 @@ typedef struct node {
 int insert_data(entry g);
 void print_data();
 int unload_data();
+void set_index(node *n, int i);

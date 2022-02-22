@@ -20,6 +20,9 @@ int insert_data(entry g) {
     // Set new node as head
     new_entry->next = data;
     data = new_entry;
+
+    // Set indices
+    set_index(data, 0);
     return 0;
 }
 
@@ -29,7 +32,7 @@ void print_data() {
     node *tmp = data;
 
     while (tmp != NULL) {
-        printf("Title of the game: %s\n", tmp->game.name);
+        printf("Index of %s: %i\n", tmp->game.name, tmp->index);
         tmp = tmp->next;
     }
 }
@@ -56,4 +59,18 @@ int unload_data() {
         tmp = cursor;
     }
     return 0;
+}
+
+void set_index(node *n, int i) {
+    
+    // Confirm if end of list
+    if (n == NULL) {
+        return;
+    }
+
+    // Set index of next node
+    set_index(n->next, i + 1);
+
+    // Set index of current node
+    n->index = i;
 }
