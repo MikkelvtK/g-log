@@ -44,8 +44,8 @@ int unload_data() {
     tmp = data;
     cursor = data;
 
-    while (cursor != NULL)
-    {
+    while (cursor != NULL) {
+        
         // Set cursor to next node
         cursor = cursor->next;
 
