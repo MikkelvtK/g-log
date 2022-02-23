@@ -18,24 +18,24 @@ bool insert_data(entry g) {
 
     // Fill new node with data
     new_entry->game = g;
-
-    // Add new node to list
     new_entry->next = NULL;
 
-
-
+    // NULL check
     if (data == NULL) {
         data = new_entry;
         set_index(data, 0);
         return true;
     }
 
+    // Initialise temp head
     node *tmp = data;
 
+    // Traverse the list to the end
     while (tmp->next != NULL) {
         tmp = tmp->next;
     }
 
+    // Insert new node
     tmp->next = new_entry;
     set_index(data, 0);
     return true;
@@ -49,7 +49,7 @@ void remove_data(int i) {
         return;
     }
 
-    // Initialise temp and cursor nodes
+    // Initialise temp and cursor heads
     node *tmp = data;
     node *cursor = data;
 
@@ -81,7 +81,7 @@ void remove_data(int i) {
 
 void print_data(char *filter) {
     
-    // Initialise temp node
+    // Initialise temp head
     node *tmp = data;
     
     // format row
@@ -117,7 +117,7 @@ void unload_data() {
         return;
     }
 
-    // Initialise temp and cursor nodes
+    // Initialise temp and cursor heads
     node *tmp = data;
     node *cursor = data;
 
@@ -153,7 +153,7 @@ void save_to_file(FILE *f, char *path) {
         return;
     }
 
-    // Initialise temp node
+    // Initialise temp head
     node *tmp = data;
 
     while (tmp != NULL) {   
