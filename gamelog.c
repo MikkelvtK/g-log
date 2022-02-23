@@ -26,14 +26,15 @@ int main(int argc, char *argv[]) {
     int *opt = malloc(sizeof(char));
     if (opt == NULL) {
         printf("Could not allocate memory for option\n");
+        unload_data();
         return 1;
     }
 
     // Create command options
-    struct option long_options[] = {
+    struct option long_opts[] = {
         {"add", required_argument, opt, 'a'},
-        {"remove", required_argument, opt, 'r'},
-        {"update", required_argument, opt, 'u'},
+        {"remove", no_argument, opt, 'r'},
+        {"update", no_argument, opt, 'u'},
         {"list", optional_argument, opt, 'l'},
         {"version", no_argument, opt, 'v'},
         {"help", no_argument, opt, 'h'},
@@ -41,15 +42,21 @@ int main(int argc, char *argv[]) {
     };
 
     // Initialise variable for index
-    int option_index = 0;
+    int opt_i = 0;
 
     // Parse option in command line
-    if (getopt_long(argc, argv, "a:r:u:l::hv", long_options, &option_index) != -1) {
+    if (getopt_long(argc, argv, "a:r:u:l::hv", long_opts, &opt_i) != -1) {
 
-        // ----- insert validate command function
-        
+        // Validate command line arguments 
+        if (!validate_arguments(argc, long_opts, opt_i, optind)) {
+            printf(USAGE);
+            free(opt);
+            unload_data();
+            return 1;
+        } 
+
         switch(*opt) {
-
+            
             // Add game 
             case 'a':
                 add(argv[optind - 1]);
@@ -67,8 +74,12 @@ int main(int argc, char *argv[]) {
 
             // Show list of games
             case 'l':
-                printf("Option --list selected\n");
-                print_data();
+                if (argc == 3) {
+                    show_list(argv[optind - 1]);
+                }
+                else {
+                    show_list(NULL);
+                }
                 break;
 
             // Show version
@@ -83,8 +94,9 @@ int main(int argc, char *argv[]) {
 
             // Default when option is not recognized
             default: 
-                printf("Use --help to look up valid commands\n");
+                printf(USAGE);
                 free(opt);
+                unload_data();
                 return 1;
         }   
     }
@@ -95,4 +107,3 @@ int main(int argc, char *argv[]) {
     free(opt);
     return 0;
 }
-

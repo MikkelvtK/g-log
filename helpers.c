@@ -2,6 +2,8 @@
 #include <stdlib.h>
 #include <time.h>
 #include <string.h>
+#include <stdbool.h>
+#include <getopt.h>
 
 #include "helpers.h"
 
@@ -19,4 +21,53 @@ void format_date(char *d, int s) {
 
     // Copy string to argument
     strcpy(d, tmp);
+}
+
+void print_table_header() {
+
+    // Print top line
+    printf("\n\n\t");
+    for (int i = 0; i < 116; i++) {
+        printf("\xF0");
+    }
+    printf("\n");
+
+    // Print columns
+    char *row = "\t%6s %26s %26s %26s %26s \n";
+    printf(row, "INDEX", "GAME", "BUCKET", "ADDED ON", "UPDATED ON");
+
+    // Print bottom line
+    printf("\t");
+    for (int i = 0; i < 116; i++) {
+        printf("\xF0");
+    }
+    printf("\n");
+}
+
+void print_table_footer() {
+
+    // Print left corner
+    printf("\t\xC8");
+
+    // Print line
+    for (int i = 0; i < 114; i++) {
+        printf("\xCD");
+    }
+
+    // Print right corner
+    printf("\xBC\n\n");
+}
+
+bool validate_arguments(int argc, struct option options[], int opt_i, int optind) {
+
+    // Validate for no arguments or required arguments
+    if (argc > optind && (options[opt_i].has_arg == 0 || options[opt_i].has_arg == 1)) {
+        return false;
+    } 
+
+    // Validate for optional arguments
+    else if (argc > optind + 1 && options[opt_i].has_arg == 2) {
+        return false;
+    }
+    return true;
 }

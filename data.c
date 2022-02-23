@@ -80,18 +80,35 @@ void remove_data(int i) {
     set_index(data, 0);
 }
 
-// Checker function for testing
-void print_data() {
-  
+void print_data(char *filter) {
+    
+    // Initialise temp node
     node *tmp = data;
+    
+    // format row
+    char *row = "\t\xBA%5i \xB3%25s \xB3%25s \xB3%25s \xB3%25s \xBA\n";
+
+    // Check if results are found
+    bool results = false;
 
     while (tmp != NULL) {
-        printf("|%5i |%20s |%20s |%20s |%20s |\n",tmp->index,tmp->game.name,tmp->game.bucket,tmp->game.added_on,tmp->game.updated_on);
 
+        // Check if node matches filter
+        if (filter == NULL || filter == tmp->game.bucket) {
+            results = true;
 
+            // Print row
+            printf(row, tmp->index, tmp->game.name, tmp->game.bucket, tmp->game.added_on, tmp->game.updated_on);
+        }
+
+        // Set temp to next node
         tmp = tmp->next;
     }
 
+    // Print feedback if no results were found
+    if (!results) {
+        printf("\n\tNO RESULTS WERE FOUND\n\n");
+    }
 }
 
 void unload_data() {

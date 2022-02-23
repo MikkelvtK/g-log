@@ -34,6 +34,17 @@ void add(char *game) {
     printf("Failed to add game");
 }
 
-void show_list(char *bucket) {
+void show_list(char *filter) {
     
+    // Clear terminal
+    system("cls");
+
+    // Print table header
+    print_table_header();
+
+    // Fill table with data
+    print_data(filter);
+
+    // Print footer of table
+    print_table_footer();
 }

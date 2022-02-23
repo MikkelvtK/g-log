@@ -1,7 +1,7 @@
 #include <stdbool.h>
 
 // Max length for properties
-#define LENGTH 50
+#define LENGTH 25
 
 // Represents a game entry in the backlog
 typedef struct {
@@ -21,7 +21,7 @@ typedef struct node {
 // Blueprints for functions
 bool insert_data(entry g);
 void remove_data(int i);
-void print_data();
+void print_data(char *filter);
 void unload_data();
 void set_index(node *n, int i);
 void save_to_file(FILE *f, char *path);
