@@ -8,6 +8,8 @@
 #include "options.h"
 #include "data.h"
 
+bool validate_arguments(int argc, struct option opt, int optind);
+
 char *PATHNAME = "gamelog.txt";
 
 int main(int argc, char *argv[]) {
