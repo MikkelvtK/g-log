@@ -1,29 +1,45 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <stdbool.h>
 
 #include "data.h"
 
 // Initialise linked list
 node *data = NULL;
 
-void insert_data(entry g) {
+bool insert_data(entry g) {
 
     // Allocate memory for new node
     node *new_entry = malloc(sizeof(node));
     if (new_entry == NULL) {
         printf("Failed to allocate memory\n");
-        return;
+        return false;
     }
 
     // Fill new node with data
     new_entry->game = g;
 
     // Add new node to list
-    new_entry->next = data;
-    data = new_entry;
+    new_entry->next = NULL;
 
+
+
+    if (data == NULL) {
+        data = new_entry;
+        set_index(data, 0);
+        return true;
+    }
+
+    node *tmp = data;
+
+    while (tmp->next != NULL) {
+        tmp = tmp->next;
+    }
+
+    tmp->next = new_entry;
     set_index(data, 0);
+    return true;
 }
 
 void remove_data(int i) {
@@ -66,17 +82,16 @@ void remove_data(int i) {
 
 // Checker function for testing
 void print_data() {
-    
+  
     node *tmp = data;
 
     while (tmp != NULL) {
-        printf("Index: %i\n", tmp->index);
-        printf("Name: %s\n", tmp->game.name);
-        printf("Bucket: %s\n", tmp->game.bucket);
-        printf("Added on: %s\n", tmp->game.added_on);
-        printf("Updated on: %s\n\n", tmp->game.updated_on);
+        printf("|%5i |%20s |%20s |%20s |%20s |\n",tmp->index,tmp->game.name,tmp->game.bucket,tmp->game.added_on,tmp->game.updated_on);
+
+
         tmp = tmp->next;
     }
+
 }
 
 void unload_data() {

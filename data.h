@@ -1,3 +1,4 @@
+#include <stdbool.h>
 
 // Max length for properties
 #define LENGTH 50
@@ -18,7 +19,7 @@ typedef struct node {
 } node;
 
 // Blueprints for functions
-void insert_data(entry g);
+bool insert_data(entry g);
 void remove_data(int i);
 void print_data();
 void unload_data();

@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <stdbool.h>
 
 #include "helpers.h"
 #include "data.h"
@@ -22,8 +23,17 @@ void add(char *game) {
     strcpy(new_entry.added_on, date);
     strcpy(new_entry.updated_on, date);
 
-    // Insert date in linked list
-    insert_data(new_entry);
+    // Insert new entry in linked list
+    bool success = insert_data(new_entry);
 
-    printf("Succesfully added new game!");
+    // Give feedback to user
+    if (success) {
+        printf("Succesfully added new game");
+        return;
+    }
+    printf("Failed to add game");
+}
+
+void show_list(char *bucket) {
+    
 }
