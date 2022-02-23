@@ -48,7 +48,7 @@ int main(int argc, char *argv[]) {
     if (getopt_long(argc, argv, "a:r:u:l::hv", long_opts, &opt_i) != -1) {
 
         // Validate command line arguments 
-        if (!validate_arguments(argc, long_opts, opt_i, optind)) {
+        if (!validate_arguments(argc, long_opts[opt_i], optind)) {
             printf(USAGE);
             free(opt);
             unload_data();
@@ -106,4 +106,18 @@ int main(int argc, char *argv[]) {
     unload_data();
     free(opt);
     return 0;
+}
+
+bool validate_arguments(int argc, struct option opt, int optind) {
+
+    // Validate for no arguments or required arguments
+    if (argc > optind && (opt.has_arg == 0 || opt.has_arg == 1)) {
+        return false;
+    } 
+
+    // Validate for optional arguments
+    else if (argc > optind + 1 && opt.has_arg == 2) {
+        return false;
+    }
+    return true;
 }

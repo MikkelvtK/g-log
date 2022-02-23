@@ -3,7 +3,6 @@
 #include <time.h>
 #include <string.h>
 #include <stdbool.h>
-#include <getopt.h>
 
 #include "helpers.h"
 
@@ -56,18 +55,4 @@ void print_table_footer() {
 
     // Print right corner
     printf("\xBC\n\n");
-}
-
-bool validate_arguments(int argc, struct option options[], int opt_i, int optind) {
-
-    // Validate for no arguments or required arguments
-    if (argc > optind && (options[opt_i].has_arg == 0 || options[opt_i].has_arg == 1)) {
-        return false;
-    } 
-
-    // Validate for optional arguments
-    else if (argc > optind + 1 && options[opt_i].has_arg == 2) {
-        return false;
-    }
-    return true;
 }
