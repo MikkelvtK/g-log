@@ -52,7 +52,7 @@ int main(int argc, char *argv[]) {
 
             // Add game 
             case 'a':
-                printf("Option --add selected\n");
+                add(argv[optind - 1]);
                 break;
 
             // Remove game
@@ -87,6 +87,8 @@ int main(int argc, char *argv[]) {
                 return 1;
         }   
     }
+
+    print_data();
 
     // Save data to file and close app
     save_to_file(file, PATHNAME);
