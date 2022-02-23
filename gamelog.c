@@ -90,6 +90,7 @@ int main(int argc, char *argv[]) {
 
     // Save data to file and close app
     save_to_file(file, PATHNAME);
+    unload_data();
     free(opt);
     return 0;
 }

@@ -35,15 +35,11 @@ void remove_data(int i) {
     }
 
     // Initialise temp and cursor nodes
-    node *tmp = NULL;
-    node *cursor = NULL;
-
-    // Set temp and cursor to head
-    tmp = data;
-    cursor = data;
+    node *tmp = data;
+    node *cursor = data;
 
     // Remove node if head itself has index
-    if (cursor != NULL && cursor->index == i) {
+    if (cursor->index == i) {
         data = cursor->next;
         free(cursor);
         set_index(data, 0);
@@ -83,17 +79,12 @@ void unload_data() {
 
     // NULL check
     if (data == NULL) {
-        printf("There is nothing to unload\n");
         return;
     }
 
     // Initialise temp and cursor nodes
-    node *tmp = NULL;
-    node *cursor = NULL;
-
-    // Set temp and cursor to head
-    tmp = data;
-    cursor = data;
+    node *tmp = data;
+    node *cursor = data;
 
     while (cursor != NULL) {
 
@@ -128,11 +119,11 @@ void save_to_file(FILE *f, char *path) {
     }
 
     // Initialise temp node
-    node *tmp = NULL;
-    tmp = data;
+    node *tmp = data;
 
     while (tmp != NULL) {   
 
+        // Write data to file
         entry buffer = tmp->game;
         fwrite(&buffer, sizeof(entry), 1, f);
 
@@ -142,17 +133,17 @@ void save_to_file(FILE *f, char *path) {
     fclose(f);
 }
 
-// // ---- Create load_from_file function
 void load_from_file(FILE *f, char *path) {
 
+    // Open file to load data
     f = fopen(path, "r");
     if (f == NULL) {
         printf("Could not open file\n");
         return;
     }
 
+    // Load data from file
     entry buffer;
-
     while (fread(&buffer, sizeof(entry), 1, f)) {
         insert_data(buffer);
     }
