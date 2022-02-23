@@ -68,6 +68,7 @@ int main(int argc, char *argv[]) {
             // Show list of games
             case 'l':
                 printf("Option --list selected\n");
+                print_data();
                 break;
 
             // Show version
@@ -87,8 +88,6 @@ int main(int argc, char *argv[]) {
                 return 1;
         }   
     }
-
-    print_data();
 
     // Save data to file and close app
     save_to_file(file, PATHNAME);

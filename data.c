@@ -70,7 +70,11 @@ void print_data() {
     node *tmp = data;
 
     while (tmp != NULL) {
-        printf("Index of %s: %i\n", tmp->game.name, tmp->index);
+        printf("Index: %i\n", tmp->index);
+        printf("Name: %s\n", tmp->game.name);
+        printf("Bucket: %s\n", tmp->game.bucket);
+        printf("Added on: %s\n", tmp->game.added_on);
+        printf("Updated on: %s\n\n", tmp->game.updated_on);
         tmp = tmp->next;
     }
 }
