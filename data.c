@@ -23,7 +23,7 @@ bool insert_data(entry g) {
     // NULL check
     if (data == NULL) {
         data = new_entry;
-        set_index(data, 0);
+        data->index = 0;
         return true;
     }
 
@@ -37,7 +37,7 @@ bool insert_data(entry g) {
 
     // Insert new node
     tmp->next = new_entry;
-    set_index(data, 0);
+    new_entry->index = tmp->index + 1;
     return true;
 }
 
@@ -57,7 +57,6 @@ void remove_data(int i) {
     if (cursor->index == i) {
         data = cursor->next;
         free(cursor);
-        set_index(data, 0);
         return;
     }
 
@@ -76,7 +75,6 @@ void remove_data(int i) {
     // Remove node with index
     tmp->next = cursor->next;
     free(cursor);
-    set_index(data, 0);
 }
 
 void print_data(char *filter) {
@@ -128,20 +126,6 @@ void unload_data() {
         free(tmp);
         tmp = cursor;
     }
-}
-
-void set_index(node *n, int i) {
-    
-    // Confirm if end of list
-    if (n == NULL) {
-        return;
-    }
-
-    // Set index of next node
-    set_index(n->next, i + 1);
-
-    // Set index of current node
-    n->index = i;
 }
 
 void save_to_file(FILE *f, char *path) {

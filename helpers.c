@@ -3,6 +3,7 @@
 #include <time.h>
 #include <string.h>
 #include <stdbool.h>
+#include <ctype.h>
 
 #include "helpers.h"
 
@@ -55,4 +56,12 @@ void print_table_footer() {
 
     // Print right corner
     printf("\xBC\n\n");
+}
+
+void to_lower(char *word) {
+
+    // Make all letters in word lowercase 
+    for (int i = 0; i < strlen(word); i++) {
+        word[i] = tolower(word[i]);
+    }
 }
