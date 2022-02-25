@@ -20,9 +20,9 @@ typedef struct node {
 
 // Blueprints for functions
 int insert_data(entry g);
-int remove_data(int i);
+int remove_data(int i, char *name);
 void print_data(char *filter);
 int unload_data();
 int save_to_file();
 int load_from_file();
-int get_name(int i, char *s);
+int update_data(int i, char *status, char *date, char *name);

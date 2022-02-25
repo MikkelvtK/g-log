@@ -42,7 +42,7 @@ int insert_data(entry g) {
     return 0;
 }
 
-int remove_data(int i) {
+int remove_data(int i, char *name) {
 
     // NULL check
     if (data == NULL) {
@@ -56,6 +56,7 @@ int remove_data(int i) {
     // Remove node if head itself has index
     if (cursor->index == i) {
         data = cursor->next;
+        strcpy(name, cursor->game.name);
         free(cursor);
         return 0;
     }
@@ -73,6 +74,7 @@ int remove_data(int i) {
 
     // Remove node with index
     tmp->next = cursor->next;
+    strcpy(name, cursor->game.name);
     free(cursor);
     return 0;
 }
@@ -181,15 +183,16 @@ int load_from_file() {
     return 0;
 }
 
-int get_name(int i, char *s) {
-    
+int update_data(int i, char *status, char *date, char *name) {
+
     // Initialise temp head
     node *tmp = data;
 
     // Check if index is in first node
     if (tmp->index == i) {
-        char *name = tmp->game.name;
-        strcpy(s, tmp->game.name);
+        strcpy(tmp->game.bucket, status);
+        strcpy(tmp->game.updated_on, date);
+        strcpy(name, tmp->game.name);
         return 0;
     }
 
@@ -203,7 +206,11 @@ int get_name(int i, char *s) {
         return 3;
     }
 
-    // Copy name of the game 
-    strcpy(s, tmp->game.name);
+    // Update data of node
+    strcpy(tmp->game.bucket, status);
+    strcpy(tmp->game.updated_on, date);
+
+    // Get name of game
+    strcpy(name, tmp->game.name);
     return 0;
 }

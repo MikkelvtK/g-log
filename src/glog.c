@@ -77,7 +77,12 @@ int main(int argc, char *argv[]) {
             
             // update game
             case 'u':
-                printf("Option --update selected\n");
+
+                if (!update()) {
+                    free(opt);
+                    return 1;
+                }
+
                 break;
 
             // Show list of games
@@ -85,7 +90,7 @@ int main(int argc, char *argv[]) {
 
                 // Print list based on input
                 argument = argc == 3 ? argv[optind] : NULL;
-                if (!show_list(argument)) {
+                if (!show_list(argument, true)) {
                     free(opt);
                     return 1;
                 }
