@@ -1,6 +1,5 @@
 #include <stdio.h>
 #include <stdlib.h>
-#include <stdbool.h>
 #include <string.h>
 
 #include "data.h"
@@ -10,13 +9,12 @@ node *data = NULL;
 
 const char *PATHNAME = "D:/Development/C/cProjects/cs50FinalProject/data/gamelog.txt";
 
-bool insert_data(entry g) {
+int insert_data(entry g) {
 
     // Allocate memory for new node
     node *new_entry = malloc(sizeof(node));
     if (new_entry == NULL) {
-        printf("Failed to allocate memory\n");
-        return false;
+        return 1;
     }
 
     // Fill new node with data
@@ -27,7 +25,7 @@ bool insert_data(entry g) {
     if (data == NULL) {
         data = new_entry;
         data->index = 0;
-        return true;
+        return 0;
     }
 
     // Initialise temp head
@@ -41,14 +39,14 @@ bool insert_data(entry g) {
     // Insert new node
     tmp->next = new_entry;
     new_entry->index = tmp->index + 1;
-    return true;
+    return 0;
 }
 
-bool remove_data(int i) {
+int remove_data(int i) {
 
     // NULL check
     if (data == NULL) {
-        return false;
+        return 2;
     }
 
     // Initialise temp and cursor heads
@@ -59,7 +57,7 @@ bool remove_data(int i) {
     if (cursor->index == i) {
         data = cursor->next;
         free(cursor);
-        return true;
+        return 0;
     }
 
     // Search for node with index
@@ -70,13 +68,13 @@ bool remove_data(int i) {
 
     // Return if node with index is not in list
     if (cursor == NULL) {
-        return false;
+        return 3;
     }
 
     // Remove node with index
     tmp->next = cursor->next;
     free(cursor);
-    return true;
+    return 0;
 }
 
 void print_data(char *filter) {
@@ -88,7 +86,7 @@ void print_data(char *filter) {
     char *row = "\t\xBA%7i \xB3%25s \xB3%25s \xB3%25s \xB3%25s \xBA\n";
 
     // Check if results are found
-    bool results = false;
+    int results = 1;
 
     while (tmp != NULL) {
 
@@ -100,7 +98,7 @@ void print_data(char *filter) {
 
         // Check if node matches filter
         if (filter == NULL || strcmp(filter, bucket) == 0) {
-            results = true;
+            results = 0;
 
             // Print row
             printf(row, index, name, bucket, added_on, updated_on);
@@ -111,16 +109,16 @@ void print_data(char *filter) {
     }
 
     // Print feedback if no results were found
-    if (!results) {
+    if (results != 0) {
         printf("\n\tNO RESULTS WERE FOUND\n\n");
     }
 }
 
-void unload_data() {
+int unload_data() {
 
     // NULL check
     if (data == NULL) {
-        return;
+        return 5;
     }
 
     // Initialise temp and cursor heads
@@ -134,16 +132,18 @@ void unload_data() {
         free(tmp);
         tmp = cursor;
     }
+
+    return 0;
 }
 
-bool save_to_file() {
+int save_to_file() {
 
     FILE *f = NULL;
 
     // Open file to save data
     f = fopen(PATHNAME, "w");
     if (f == NULL) {
-        return false;
+        return 4;
     }
 
     // Initialise temp head
@@ -159,17 +159,17 @@ bool save_to_file() {
         tmp = tmp->next;
     }
     fclose(f);
-    return true;
+    return 0;
 }
 
-bool load_from_file() {
+int load_from_file() {
 
     FILE *f = NULL;
 
     // Open file to load data
     f = fopen(PATHNAME, "r");
     if (f == NULL) {
-        return false;
+        return 4;
     }
 
     // Load data from file
@@ -178,26 +178,32 @@ bool load_from_file() {
         insert_data(buffer);
     } 
     fclose(f);
-    return true;
+    return 0;
 }
 
-void get_name(int i, char *s) {
+int get_name(int i, char *s) {
     
+    // Initialise temp head
     node *tmp = data;
 
+    // Check if index is in first node
     if (tmp->index == i) {
         char *name = tmp->game.name;
         strcpy(s, tmp->game.name);
-        return;
+        return 0;
     }
 
+    // Traverse the list 
     while (tmp != NULL && tmp->index != i) {
         tmp = tmp->next;
     }
 
+    // Check if index is in list
     if (tmp == NULL) {
-        return;
+        return 3;
     }
 
+    // Copy name of the game 
     strcpy(s, tmp->game.name);
+    return 0;
 }

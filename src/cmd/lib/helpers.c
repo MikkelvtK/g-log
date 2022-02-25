@@ -19,6 +19,8 @@ void format_date(char *d, int s) {
     // Format date
     strftime(tmp, sizeof(tmp), "%x - %I:%M%p", now);
 
+    printf("TEMP DATE: %s\n", tmp);
+
     // Copy string to argument
     strcpy(d, tmp);
 }

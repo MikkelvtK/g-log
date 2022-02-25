@@ -66,6 +66,8 @@ int main(int argc, char *argv[]) {
 
             // Remove game
             case 'r':
+
+                // Remove game from data
                 if (!remove_game()) {
                     free(opt);
                     return 1;

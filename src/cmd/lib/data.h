@@ -19,11 +19,10 @@ typedef struct node {
 } node;
 
 // Blueprints for functions
-bool insert_data(entry g);
-bool remove_data(int i);
+int insert_data(entry g);
+int remove_data(int i);
 void print_data(char *filter);
-void unload_data();
-void set_index(node *n, int i);
-bool save_to_file();
-bool load_from_file();
-void get_name(int i, char *s);
+int unload_data();
+int save_to_file();
+int load_from_file();
+int get_name(int i, char *s);
