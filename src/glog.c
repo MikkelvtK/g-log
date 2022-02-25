@@ -17,7 +17,7 @@ int main(int argc, char *argv[]) {
     }
 
     // Allocate memory for flag
-    int *opt = malloc(sizeof(char));
+    int *opt = malloc(sizeof(int));
     if (opt == NULL) {
         printf("Could not allocate memory for option\n");
         return 1;

@@ -65,3 +65,15 @@ void to_upper(char *word) {
         word[i] = toupper(word[i]);
     }
 }
+
+int ask_input(char *question) {
+
+    int answer;
+
+    printf("\n");
+    printf("%s\n", question);
+    printf("Index: ");
+    scanf("%i", &answer);
+    system("cls");
+    return answer;
+}
