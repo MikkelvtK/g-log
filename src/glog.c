@@ -2,13 +2,11 @@
 #include <getopt.h>
 #include <stdlib.h>
 
-#include "helpers.h"
-#include "options.h"
-#include "data.h"
+#include "cmd/cmd.h"
+
+#define USAGE "Use --help to look up valid commands\n"
 
 bool validate_arguments(int argc, struct option opt, int optind);
-
-char *PATHNAME = "gamelog.txt";
 
 int main(int argc, char *argv[]) {
 
@@ -18,15 +16,10 @@ int main(int argc, char *argv[]) {
         return 1;
     }
 
-    // Load data from file
-    FILE *file = NULL;
-    load_from_file(file, PATHNAME);
-
     // Allocate memory for flag
     int *opt = malloc(sizeof(char));
     if (opt == NULL) {
         printf("Could not allocate memory for option\n");
-        unload_data();
         return 1;
     }
 
@@ -51,7 +44,6 @@ int main(int argc, char *argv[]) {
         if (!validate_arguments(argc, long_opts[opt_i], optind)) {
             printf(USAGE);
             free(opt);
-            unload_data();
             return 1;
         } 
 
@@ -96,14 +88,10 @@ int main(int argc, char *argv[]) {
             default: 
                 printf(USAGE);
                 free(opt);
-                unload_data();
                 return 1;
         }   
     }
 
-    // Save data to file and close app
-    save_to_file(file, PATHNAME);
-    unload_data();
     free(opt);
     return 0;
 }

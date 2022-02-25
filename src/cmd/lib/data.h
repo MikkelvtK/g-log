@@ -24,5 +24,5 @@ void remove_data(int i);
 void print_data(char *filter);
 void unload_data();
 void set_index(node *n, int i);
-void save_to_file(FILE *f, char *path);
-void load_from_file(FILE *f, char *path);
+bool save_to_file(FILE *f);
+bool load_from_file();

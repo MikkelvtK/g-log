@@ -7,6 +7,8 @@
 // Initialise linked list
 node *data = NULL;
 
+const char *PATHNAME = "D:/Development/C/cProjects/cs50FinalProject/data/gamelog.txt";
+
 bool insert_data(entry g) {
 
     // Allocate memory for new node
@@ -95,7 +97,13 @@ void print_data(char *filter) {
             results = true;
 
             // Print row
-            printf(row, tmp->index, tmp->game.name, tmp->game.bucket, tmp->game.added_on, tmp->game.updated_on);
+            int index = tmp->index;
+            char *name = tmp->game.name;
+            char *bucket = tmp->game.bucket;
+            char *added_on = tmp->game.added_on;
+            char *updated_on = tmp->game.updated_on;
+
+            printf(row, index, name, bucket, added_on, updated_on);
         }
 
         // Set temp to next node
@@ -128,13 +136,12 @@ void unload_data() {
     }
 }
 
-void save_to_file(FILE *f, char *path) {
+bool save_to_file(FILE *f) {
 
     // Open file to save data
-    f = fopen(path, "w");
+    f = fopen(PATHNAME, "w");
     if (f == NULL) {
-        printf("Could not open file\n");
-        return;
+        return false;
     }
 
     // Initialise temp head
@@ -150,22 +157,24 @@ void save_to_file(FILE *f, char *path) {
         tmp = tmp->next;
     }
     fclose(f);
+    return true;
 }
 
-void load_from_file(FILE *f, char *path) {
+bool load_from_file() {
+
+    FILE *f = NULL;
 
     // Open file to load data
-    f = fopen(path, "r");
+    f = fopen(PATHNAME, "r");
     if (f == NULL) {
-        printf("Could not open file\n");
-        return;
+        return false;
     }
 
     // Load data from file
     entry buffer;
     while (fread(&buffer, sizeof(entry), 1, f)) {
         insert_data(buffer);
-    }
-    
+    } 
     fclose(f);
+    return true;
 }
