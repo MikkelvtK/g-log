@@ -34,7 +34,7 @@ void print_table_header() {
 
     // Print columns
     char *row = "\t%8s %26s %26s %26s %26s \n";
-    printf(row, "INDEX", "GAME", "BUCKET", "ADDED ON", "UPDATED ON");
+    printf(row, "INDEX", "GAME", "STATUS", "ADDED ON", "UPDATED ON");
 
     // Print bottom line
     printf("\t");

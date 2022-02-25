@@ -52,7 +52,6 @@ int main(int argc, char *argv[]) {
 
         switch(*opt) {
             
-            // Add game 
             case 'a':
 
                 // Add game to backlog based on input
@@ -61,10 +60,8 @@ int main(int argc, char *argv[]) {
                     free(opt);
                     return 1;
                 }
-
                 break;
 
-            // Remove game
             case 'r':
 
                 // Remove game from data
@@ -72,20 +69,17 @@ int main(int argc, char *argv[]) {
                     free(opt);
                     return 1;
                 }
-
                 break;
             
-            // update game
             case 'u':
 
+                // Update an entry in the backlog
                 if (!update()) {
                     free(opt);
                     return 1;
                 }
-
                 break;
 
-            // Show list of games
             case 'l':
 
                 // Print list based on input
@@ -94,7 +88,6 @@ int main(int argc, char *argv[]) {
                     free(opt);
                     return 1;
                 }
-
                 break;
 
             // Show version

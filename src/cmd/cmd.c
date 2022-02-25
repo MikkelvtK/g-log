@@ -7,7 +7,7 @@
 #include "lib/data.h"
 #include "lib/errors.h"
 
-char *STATUS[4] = {"Backlog", "In progress", "Finished", "Paused"};
+char *STATUS[] = {"Backlog", "In progress", "Finished", "Paused"};
 
 bool add(char *game) {
 
@@ -33,7 +33,7 @@ bool add(char *game) {
 
     // Copy data over
     strcpy(new_entry.name, game);
-    strcpy(new_entry.bucket, STATUS[0]);
+    strcpy(new_entry.status, STATUS[0]);
     strcpy(new_entry.added_on, date);
     strcpy(new_entry.updated_on, date);
 

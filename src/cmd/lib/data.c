@@ -94,7 +94,7 @@ void print_data(char *filter) {
 
         int index = tmp->index;
         char *name = tmp->game.name;
-        char *bucket = tmp->game.bucket;
+        char *bucket = tmp->game.status;
         char *added_on = tmp->game.added_on;
         char *updated_on = tmp->game.updated_on;
 
@@ -190,7 +190,7 @@ int update_data(int i, char *status, char *date, char *name) {
 
     // Check if index is in first node
     if (tmp->index == i) {
-        strcpy(tmp->game.bucket, status);
+        strcpy(tmp->game.status, status);
         strcpy(tmp->game.updated_on, date);
         strcpy(name, tmp->game.name);
         return 0;
@@ -207,7 +207,7 @@ int update_data(int i, char *status, char *date, char *name) {
     }
 
     // Update data of node
-    strcpy(tmp->game.bucket, status);
+    strcpy(tmp->game.status, status);
     strcpy(tmp->game.updated_on, date);
 
     // Get name of game

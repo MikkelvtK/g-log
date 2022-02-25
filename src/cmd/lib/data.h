@@ -6,7 +6,7 @@
 // Represents a game entry in the backlog
 typedef struct {
     char name[LENGTH];
-    char bucket[LENGTH];
+    char status[LENGTH];
     char added_on[LENGTH];
     char updated_on[LENGTH];
 } entry;
