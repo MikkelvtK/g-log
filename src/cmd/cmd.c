@@ -11,8 +11,7 @@ const char *BUCKETS[4] = {"Backlog", "In progress", "Finished", "Paused"};
 bool add(char *game) {
 
     // Load data from file
-    FILE *file = NULL;
-    if (!load_from_file(file)) {
+    if (!load_from_file()) {
         printf("Failed to load data from file\n");
         return false;
     }
@@ -34,7 +33,7 @@ bool add(char *game) {
     insert_data(new_entry);
 
     // Save data to file
-    if (!save_to_file(file)) {
+    if (!save_to_file()) {
         printf("Failed to save data to file\n");
         unload_data();
         return false;
@@ -43,6 +42,11 @@ bool add(char *game) {
     // Free data from memory
     unload_data();
 
+    // Give feedback to user
+    char copy[strlen(game) + 1];
+    strcpy(copy, game);
+    to_upper(copy);
+    printf("---SUCCESSFULLY ADDED %s---\n", copy);
     return true;
 }
 
@@ -66,5 +70,41 @@ bool show_list(char *filter) {
     // Print footer of table
     print_table_footer();
 
+    return true;
+}
+
+bool remove_game() {
+
+    int index;
+
+    show_list(NULL);
+
+    printf("\n");
+    printf("Please enter the index of the game that you want to remove from G-Log\n");
+    printf("Index: ");
+    scanf("%i", &index);
+
+    char *game = malloc(LENGTH);
+    get_name(index, game);
+    to_upper(game);
+
+    if (!remove_data(index)) {
+        printf("---FAILED TO REMOVE %s---\n", game);
+        free(game);
+        unload_data();
+        return false;
+    } 
+
+    // Save data to file
+    if (!save_to_file()) {
+        printf("Failed to save data to file\n");
+        free(game);
+        unload_data();
+        return false;
+    }
+
+    printf("---SUCCESSFULLY REMOVED %s---\n", game);
+    free(game);
+    unload_data();
     return true;
 }

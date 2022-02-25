@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <stdbool.h>
+#include <string.h>
 
 #include "data.h"
 
@@ -43,12 +44,11 @@ bool insert_data(entry g) {
     return true;
 }
 
-void remove_data(int i) {
+bool remove_data(int i) {
 
     // NULL check
     if (data == NULL) {
-        printf("There is nothing to remove\n");
-        return;
+        return false;
     }
 
     // Initialise temp and cursor heads
@@ -59,7 +59,7 @@ void remove_data(int i) {
     if (cursor->index == i) {
         data = cursor->next;
         free(cursor);
-        return;
+        return true;
     }
 
     // Search for node with index
@@ -70,13 +70,13 @@ void remove_data(int i) {
 
     // Return if node with index is not in list
     if (cursor == NULL) {
-        printf("Index was not in list\n");
-        return;
+        return false;
     }
 
     // Remove node with index
     tmp->next = cursor->next;
     free(cursor);
+    return true;
 }
 
 void print_data(char *filter) {
@@ -85,24 +85,24 @@ void print_data(char *filter) {
     node *tmp = data;
     
     // format row
-    char *row = "\t\xBA%5i \xB3%25s \xB3%25s \xB3%25s \xB3%25s \xBA\n";
+    char *row = "\t\xBA%7i \xB3%25s \xB3%25s \xB3%25s \xB3%25s \xBA\n";
 
     // Check if results are found
     bool results = false;
 
     while (tmp != NULL) {
 
+        int index = tmp->index;
+        char *name = tmp->game.name;
+        char *bucket = tmp->game.bucket;
+        char *added_on = tmp->game.added_on;
+        char *updated_on = tmp->game.updated_on;
+
         // Check if node matches filter
-        if (filter == NULL || filter == tmp->game.bucket) {
+        if (filter == NULL || strcmp(filter, bucket) == 0) {
             results = true;
 
             // Print row
-            int index = tmp->index;
-            char *name = tmp->game.name;
-            char *bucket = tmp->game.bucket;
-            char *added_on = tmp->game.added_on;
-            char *updated_on = tmp->game.updated_on;
-
             printf(row, index, name, bucket, added_on, updated_on);
         }
 
@@ -136,7 +136,9 @@ void unload_data() {
     }
 }
 
-bool save_to_file(FILE *f) {
+bool save_to_file() {
+
+    FILE *f = NULL;
 
     // Open file to save data
     f = fopen(PATHNAME, "w");
@@ -177,4 +179,25 @@ bool load_from_file() {
     } 
     fclose(f);
     return true;
+}
+
+void get_name(int i, char *s) {
+    
+    node *tmp = data;
+
+    if (tmp->index == i) {
+        char *name = tmp->game.name;
+        strcpy(s, tmp->game.name);
+        return;
+    }
+
+    while (tmp != NULL && tmp->index != i) {
+        tmp = tmp->next;
+    }
+
+    if (tmp == NULL) {
+        return;
+    }
+
+    strcpy(s, tmp->game.name);
 }

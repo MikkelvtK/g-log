@@ -47,16 +47,30 @@ int main(int argc, char *argv[]) {
             return 1;
         } 
 
+        // Initiate argument for later use
+        char *argument;
+
         switch(*opt) {
             
             // Add game 
             case 'a':
-                add(argv[optind - 1]);
+
+                // Add game to backlog based on input
+                argument = argv[optind - 1];
+                if (!add(argument)) {
+                    free(opt);
+                    return 1;
+                }
+
                 break;
 
             // Remove game
             case 'r':
-                printf("Option --remove selected\n");
+                if (!remove_game()) {
+                    free(opt);
+                    return 1;
+                }
+
                 break;
             
             // update game
@@ -66,12 +80,14 @@ int main(int argc, char *argv[]) {
 
             // Show list of games
             case 'l':
-                if (argc == 3) {
-                    show_list(argv[optind - 1]);
+
+                // Print list based on input
+                argument = argc == 3 ? argv[optind] : NULL;
+                if (!show_list(argument)) {
+                    free(opt);
+                    return 1;
                 }
-                else {
-                    show_list(NULL);
-                }
+
                 break;
 
             // Show version
