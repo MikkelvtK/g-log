@@ -70,10 +70,13 @@ int ask_input(char *question) {
 
     int answer;
 
+    // Ask user for input
     printf("\n");
     printf("%s\n", question);
+
+    // Wait for input
     printf("Index: ");
     scanf("%i", &answer);
-    system("cls");
+    printf("\n");
     return answer;
 }

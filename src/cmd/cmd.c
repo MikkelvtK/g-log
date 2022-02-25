@@ -169,6 +169,7 @@ bool update() {
     index_game = ask_input(question);
 
     // Print available statusses
+    printf("Status choices:\n");
     for (int i = 0; i < 4; i++) {
         printf("%i. %s\n", i, STATUS[i]);
     }
