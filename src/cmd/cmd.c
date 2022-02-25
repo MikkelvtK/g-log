@@ -216,3 +216,7 @@ bool update() {
     free(date);
     return true;
 }
+
+void print_version() {
+    printf("G-Log / version 1.0.0 / <date>\n");
+}

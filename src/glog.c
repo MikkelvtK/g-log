@@ -38,7 +38,7 @@ int main(int argc, char *argv[]) {
     int opt_i = 0;
 
     // Parse option in command line
-    if (getopt_long(argc, argv, "a:r:u:l::hv", long_opts, &opt_i) != -1) {
+    if (getopt_long(argc, argv, "a:rul::hv", long_opts, &opt_i) != -1) {
 
         // Validate command line arguments 
         if (!validate_arguments(argc, long_opts[opt_i], optind)) {
@@ -92,7 +92,7 @@ int main(int argc, char *argv[]) {
 
             // Show version
             case 'v':
-                printf("Option --version selected\n");
+                print_version();
                 break;
 
             // Show help
