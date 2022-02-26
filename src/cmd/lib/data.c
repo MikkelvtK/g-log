@@ -7,8 +7,6 @@
 // Initialise linked list
 node *data = NULL;
 
-const char *PATHNAME = "D:/Development/C/cProjects/cs50FinalProject/data/gamelog.txt";
-
 int insert_data(entry g) {
 
     // Allocate memory for new node
@@ -142,8 +140,14 @@ int save_to_file() {
 
     FILE *f = NULL;
 
+    // Get path for from env 
+    char *data_path = getenv("GLOGDATAPATH");
+    if (data_path == NULL) {
+        return 6;
+    }
+
     // Open file to save data
-    f = fopen(PATHNAME, "w");
+    f = fopen(data_path, "w");
     if (f == NULL) {
         return 4;
     }
@@ -168,8 +172,14 @@ int load_from_file() {
 
     FILE *f = NULL;
 
+    // Get path for from env 
+    char *data_path = getenv("GLOGDATAPATH");
+    if (data_path == NULL) {
+        return 6;
+    }
+
     // Open file to load data
-    f = fopen(PATHNAME, "r");
+    f = fopen(data_path, "r");
     if (f == NULL) {
         return 4;
     }

@@ -6,6 +6,7 @@ const char *errors[] = {
     "Index is not found",
     "Could not open file",
     "Unable to unload memory",
+    "No environment variable found for data path",
 };
 
 void print_error(int i) {

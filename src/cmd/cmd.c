@@ -77,9 +77,6 @@ bool show_list(char *filter, bool unload) {
         return false;
     }
 
-    // Clear terminal
-    system("cls");
-
     // Print table header
     print_table_header();
 
