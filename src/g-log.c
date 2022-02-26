@@ -97,7 +97,7 @@ int main(int argc, char *argv[]) {
 
             // Show help
             case 'h':
-                printf("Option --help selected\n");
+                print_help();
                 break;
 
             // Default when option is not recognized
