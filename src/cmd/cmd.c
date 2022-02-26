@@ -219,13 +219,13 @@ void print_version() {
 }
 
 void print_help() {
-    printf("Usage:\n");
+    printf("Usage:\n\n");
     printf("  $ g-log [command] \"argument\"\n\n");
-    printf("Options:\n");
-    printf("  --add\t\t\t[required argument] Adds a new game to your backlog\n");
-    printf("  --remove\t\t[no argument] Removes a game from your backlog\n");
-    printf("  --update\t\t[no argument] Updates the status of a game in the backlog (Backlog, In progress, Finished, Paused)\n");
-    printf("  --list \t\t[optional argument] Lists all games in your backlog. Can search by status via arguments. No argument will show all games\n");
-    printf("  --help\t\tShows all options\n");
-    printf("  --version\t\tShows current version\n");
+    printf("Options:\n\n");
+    printf("  --add\t\t[required argument] Adds a new game to your backlog\n");
+    printf("  --remove\t[no argument] Removes a game from your backlog\n");
+    printf("  --update\t[no argument] Updates the status of a game in the backlog (Backlog, In progress, Finished, Paused)\n");
+    printf("  --list \t[optional argument] Lists all games in your backlog. Can search by status via arguments. No argument will show all games\n");
+    printf("  --help\tShows all options\n");
+    printf("  --version\tShows current version\n");
 }
