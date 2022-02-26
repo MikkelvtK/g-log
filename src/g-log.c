@@ -17,7 +17,7 @@ int main(int argc, char *argv[]) {
     }
 
     // Allocate memory for flag
-    int *opt = malloc(sizeof(char));
+    int *opt = malloc(sizeof(int));
     if (opt == NULL) {
         printf("Could not allocate memory for option\n");
         return 1;
@@ -38,7 +38,7 @@ int main(int argc, char *argv[]) {
     int opt_i = 0;
 
     // Parse option in command line
-    if (getopt_long(argc, argv, "a:r:u:l::hv", long_opts, &opt_i) != -1) {
+    if (getopt_long(argc, argv, "a:rul::hv", long_opts, &opt_i) != -1) {
 
         // Validate command line arguments 
         if (!validate_arguments(argc, long_opts[opt_i], optind)) {
@@ -52,7 +52,6 @@ int main(int argc, char *argv[]) {
 
         switch(*opt) {
             
-            // Add game 
             case 'a':
 
                 // Add game to backlog based on input
@@ -61,10 +60,8 @@ int main(int argc, char *argv[]) {
                     free(opt);
                     return 1;
                 }
-
                 break;
 
-            // Remove game
             case 'r':
 
                 // Remove game from data
@@ -72,20 +69,17 @@ int main(int argc, char *argv[]) {
                     free(opt);
                     return 1;
                 }
-
                 break;
             
-            // update game
             case 'u':
 
+                // Update an entry in the backlog
                 if (!update()) {
                     free(opt);
                     return 1;
                 }
-
                 break;
 
-            // Show list of games
             case 'l':
 
                 // Print list based on input
@@ -94,17 +88,16 @@ int main(int argc, char *argv[]) {
                     free(opt);
                     return 1;
                 }
-
                 break;
 
             // Show version
             case 'v':
-                printf("Option --version selected\n");
+                print_version();
                 break;
 
             // Show help
             case 'h':
-                printf("Option --help selected\n");
+                print_help();
                 break;
 
             // Default when option is not recognized

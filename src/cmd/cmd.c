@@ -7,7 +7,7 @@
 #include "lib/data.h"
 #include "lib/errors.h"
 
-char *BUCKETS[4] = {"Backlog", "In progress", "Finished", "Paused"};
+char *STATUS[] = {"Backlog", "In progress", "Finished", "Paused"};
 
 bool add(char *game) {
 
@@ -17,14 +17,14 @@ bool add(char *game) {
     // Load data from file
     error = load_from_file();
     if (error != 0) {
-        printf("Error: %i. %s\n", error, errors[error - 1]);
+        print_error(error);
         return false;
     }
 
     // Get current date
     char *date = malloc(DATE_SIZE);
     if (date == NULL) {
-        printf("Error: %i. %s\n", 0, errors[0]);
+        print_error(1);
     }
     format_date(date, DATE_SIZE);
 
@@ -33,14 +33,14 @@ bool add(char *game) {
 
     // Copy data over
     strcpy(new_entry.name, game);
-    strcpy(new_entry.bucket, BUCKETS[0]);
+    strcpy(new_entry.status, STATUS[0]);
     strcpy(new_entry.added_on, date);
     strcpy(new_entry.updated_on, date);
 
     // Insert data to linked list
     error = insert_data(new_entry);
     if (error != 0) {
-        printf("Error: %i. %s\n", error, errors[error - 1]);
+        print_error(error);
         free(date);
         unload_data();
         return false;
@@ -49,21 +49,19 @@ bool add(char *game) {
     // Save data to file
     error = save_to_file();
     if (error != 0) {
-        printf("Error: %i. %s\n", error, errors[error - 1]);
+        print_error(error);
         free(date);
         unload_data();
         return false;
     }
 
-    // Free data from memory
-    unload_data();
-
     // Give feedback to user
-    char copy[strlen(game) + 1];
-    strcpy(copy, game);
-    to_upper(copy);
-    printf("---SUCCESSFULLY ADDED %s---\n", copy);
+    to_upper(game);
+    printf("---SUCCESSFULLY ADDED %s---\n", game);
+
+    // Free data from memory
     free(date);
+    unload_data();
     return true;
 }
 
@@ -75,12 +73,9 @@ bool show_list(char *filter, bool unload) {
     // Load data from file
     error = load_from_file();
     if (error != 0) {
-        printf("Error: %i. %s\n", error, errors[error - 1]);
+        print_error(error);
         return false;
     }
-
-    // Clear terminal
-    system("cls");
 
     // Print table header
     print_table_header();
@@ -101,6 +96,7 @@ bool show_list(char *filter, bool unload) {
 bool remove_game() {
 
     // initialise variables
+    char *question;
     int index;
     int error;
 
@@ -108,22 +104,20 @@ bool remove_game() {
     show_list(NULL, false);
 
     // Ask for user input
-    printf("\n");
-    printf("Please enter the index of the game that you want to remove from G-Log\n");
-    printf("Index: ");
-    scanf("%i", &index);
+    question = "Please enter the index of the game that you want to remove from G-Log";
+    index = ask_input(question);
 
     // Allocate memory for name selected game
     char *game = malloc(LENGTH);
     if (game == NULL) {
-        printf("Error: %s", errors[0]);
+        print_error(1);
         return false;
     }
 
     // Remove the game from the data
     error = remove_data(index, game);
     if (error != 0) {
-        printf("Error: %i. %s\n", error, errors[error - 1]);
+        print_error(error);
         free(game);
         unload_data();
         return false;
@@ -132,18 +126,18 @@ bool remove_game() {
     // Save data to file
     error = save_to_file();
     if (error != 0) {
-        printf("Error: %i. %s\n", error, errors[error - 1]);
+        print_error(error);
         free(game);
         unload_data();
         return false;
     }
 
-    // Free data from memory
-    unload_data();
-
     // Give user feedback
     to_upper(game);
     printf("---SUCCESSFULLY REMOVED %s---\n", game);
+
+    // Free data from memory
+    unload_data();
     free(game);
     return true;
 }   
@@ -151,6 +145,7 @@ bool remove_game() {
 bool update() {
 
     // initialise variables
+    char *question;
     int index_game;
     int index_status;
     int error;
@@ -158,7 +153,8 @@ bool update() {
     // Get date
     char *date = malloc(DATE_SIZE);
     if (date == NULL) {
-        printf("Error: %i. %s\n", 0, errors[0]);
+        print_error(1);
+        return false;
     }
     format_date(date, DATE_SIZE);
 
@@ -166,36 +162,32 @@ bool update() {
     show_list(NULL, false);
 
     // Ask for user input
-    printf("\n");
-    printf("Please enter the index of the game that you want to update in G-Log\n");
-    printf("Index: ");
-    scanf("%i", &index_game);
-    system("cls");
+    question = "Please enter the index of the game that you want to update in G-Log";
+    index_game = ask_input(question);
 
     // Print available statusses
-    for (int i = 0; i < 4; i++){
-        printf("%i. %s\n", i, BUCKETS[i]);
+    printf("Status choices:\n");
+    for (int i = 0; i < 4; i++) {
+        printf("%i. %s\n", i, STATUS[i]);
     }
 
     // Ask for user input
-    printf("\n");
-    printf("Please enter the index of the status you want to give\n");
-    printf("Index: ");
-    scanf("%i", &index_status);
-    printf("\n");
+    question = "Please enter the index of the status you want to give";
+    index_status = ask_input(question);
 
     // Allocate memory for name selected game
     char *game = malloc(LENGTH);
     if (game == NULL) {
-        printf("Error: %s", errors[0]);
+        print_error(1);
         free(date);
         return false;
     }
 
     // Update data 
-    error = update_data(index_game, BUCKETS[index_status], date, game);
+    error = update_data(index_game, STATUS[index_status], date, game);
     if (error != 0) {
-        printf("Error: %i. %s\n", error, errors[error - 1]);
+        print_error(error);
+        free(game);
         free(date);
         unload_data();
         return false;
@@ -204,7 +196,7 @@ bool update() {
     // Save data to file
     error = save_to_file();
     if (error != 0) {
-        printf("Error: %i. %s\n", error, errors[error - 1]);
+        print_error(error);
         free(game);
         free(date);
         unload_data();
@@ -215,8 +207,25 @@ bool update() {
     to_upper(game);
     printf("---SUCCESSFULLY UPDATED %s---\n", game);
 
+    // Free memory
     unload_data();
     free(game);
     free(date);
     return true;
+}
+
+void print_version() {
+    printf("G-Log / version 1.0.0 / <date>\n");
+}
+
+void print_help() {
+    printf("Usage:\n\n");
+    printf("  $ g-log [command] \"argument\"\n\n");
+    printf("Options:\n\n");
+    printf("  --add\t\t[required argument] Adds a new game to your backlog\n");
+    printf("  --remove\t[no argument] Removes a game from your backlog\n");
+    printf("  --update\t[no argument] Updates the status of a game in the backlog (Backlog, In progress, Finished, Paused)\n");
+    printf("  --list \t[optional argument] Lists all games in your backlog. Can search by status via arguments. No argument will show all games\n");
+    printf("  --help\tShows all options\n");
+    printf("  --version\tShows current version\n");
 }

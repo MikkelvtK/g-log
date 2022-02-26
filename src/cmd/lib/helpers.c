@@ -34,7 +34,7 @@ void print_table_header() {
 
     // Print columns
     char *row = "\t%8s %26s %26s %26s %26s \n";
-    printf(row, "INDEX", "GAME", "BUCKET", "ADDED ON", "UPDATED ON");
+    printf(row, "INDEX", "GAME", "STATUS", "ADDED ON", "UPDATED ON");
 
     // Print bottom line
     printf("\t");
@@ -64,4 +64,19 @@ void to_upper(char *word) {
     for (int i = 0; i < strlen(word); i++) {
         word[i] = toupper(word[i]);
     }
+}
+
+int ask_input(char *question) {
+
+    int answer;
+
+    // Ask user for input
+    printf("\n");
+    printf("%s\n", question);
+
+    // Wait for input
+    printf("Index: ");
+    scanf("%i", &answer);
+    printf("\n");
+    return answer;
 }

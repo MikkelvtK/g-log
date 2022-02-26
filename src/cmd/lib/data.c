@@ -7,8 +7,6 @@
 // Initialise linked list
 node *data = NULL;
 
-const char *PATHNAME = "D:/Development/C/cProjects/cs50FinalProject/data/gamelog.txt";
-
 int insert_data(entry g) {
 
     // Allocate memory for new node
@@ -94,7 +92,7 @@ void print_data(char *filter) {
 
         int index = tmp->index;
         char *name = tmp->game.name;
-        char *bucket = tmp->game.bucket;
+        char *bucket = tmp->game.status;
         char *added_on = tmp->game.added_on;
         char *updated_on = tmp->game.updated_on;
 
@@ -142,8 +140,14 @@ int save_to_file() {
 
     FILE *f = NULL;
 
+    // Get path for from env 
+    char *data_path = getenv("GLOGDATAPATH");
+    if (data_path == NULL) {
+        return 6;
+    }
+
     // Open file to save data
-    f = fopen(PATHNAME, "w");
+    f = fopen(data_path, "w");
     if (f == NULL) {
         return 4;
     }
@@ -168,8 +172,14 @@ int load_from_file() {
 
     FILE *f = NULL;
 
+    // Get path for from env 
+    char *data_path = getenv("GLOGDATAPATH");
+    if (data_path == NULL) {
+        return 6;
+    }
+
     // Open file to load data
-    f = fopen(PATHNAME, "r");
+    f = fopen(data_path, "r");
     if (f == NULL) {
         return 4;
     }
@@ -190,7 +200,7 @@ int update_data(int i, char *status, char *date, char *name) {
 
     // Check if index is in first node
     if (tmp->index == i) {
-        strcpy(tmp->game.bucket, status);
+        strcpy(tmp->game.status, status);
         strcpy(tmp->game.updated_on, date);
         strcpy(name, tmp->game.name);
         return 0;
@@ -207,7 +217,7 @@ int update_data(int i, char *status, char *date, char *name) {
     }
 
     // Update data of node
-    strcpy(tmp->game.bucket, status);
+    strcpy(tmp->game.status, status);
     strcpy(tmp->game.updated_on, date);
 
     // Get name of game
