@@ -6,15 +6,9 @@
 
 #define USAGE "Use --help to look up valid commands\n"
 
-bool validate_arguments(int argc, struct option opt, int optind);
+bool validate_arguments(int argc, struct option opt, int optind, int response);
 
 int main(int argc, char *argv[]) {
-
-    // Ensure command is given
-    if (argc == 1) {
-        printf("No command given\n");
-        return 1;
-    }
 
     // Allocate memory for flag
     int *opt = malloc(sizeof(int));
@@ -34,88 +28,87 @@ int main(int argc, char *argv[]) {
         {0, 0, 0, 0},
     };
 
-    // Initialise variable for index
+    // Initialise variable for options index
     int opt_i = 0;
 
-    // Parse option in command line
-    if (getopt_long(argc, argv, "a:rul::hv", long_opts, &opt_i) != -1) {
+    // Process command line input
+    int response = getopt_long(argc, argv, "a:rul::hv", long_opts, &opt_i);
 
-        // Validate command line arguments 
-        if (!validate_arguments(argc, long_opts[opt_i], optind)) {
-            printf(USAGE);
-            free(opt);
-            return 1;
-        } 
+    // Validate command line input
+    bool is_valid = validate_arguments(argc, long_opts[opt_i], optind, response);
+    if (!is_valid) {
+        printf(USAGE);
+        free(opt);
+        return 1;
+    }
 
-        // Initiate argument for later use
-        char *argument;
+    // Initialize variable to store command line arguments
+    char *argument;
 
-        switch(*opt) {
-            
-            case 'a':
+    switch(*opt) {
+        
+        case 'a':
 
-                // Add game to backlog based on input
-                argument = argv[optind - 1];
-                if (!add(argument)) {
-                    free(opt);
-                    return 1;
-                }
-                break;
-
-            case 'r':
-
-                // Remove game from data
-                if (!remove_game()) {
-                    free(opt);
-                    return 1;
-                }
-                break;
-            
-            case 'u':
-
-                // Update an entry in the backlog
-                if (!update()) {
-                    free(opt);
-                    return 1;
-                }
-                break;
-
-            case 'l':
-
-                // Print list based on input
-                argument = argc == 3 ? argv[optind] : NULL;
-                if (!show_list(argument, true)) {
-                    free(opt);
-                    return 1;
-                }
-                break;
-
-            // Show version
-            case 'v':
-                print_version();
-                break;
-
-            // Show help
-            case 'h':
-                print_help();
-                break;
-
-            // Default when option is not recognized
-            default: 
-                printf(USAGE);
+            // Add game to backlog based on input
+            argument = argv[optind - 1];
+            if (!add(argument)) {
                 free(opt);
                 return 1;
-        }   
-    }
+            }
+            break;
+
+        case 'r':
+
+            // Remove game from data
+            if (!remove_game()) {
+                free(opt);
+                return 1;
+            }
+            break;
+        
+        case 'u':
+
+            // Update an entry in the backlog
+            if (!update()) {
+                free(opt);
+                return 1;
+            }
+            break;
+
+        case 'l':
+
+            // Print list based on input
+            argument = argc == 3 ? argv[optind] : NULL;
+            if (!show_list(argument, true)) {
+                free(opt);
+                return 1;
+            }
+            break;
+
+        // Show version
+        case 'v':
+            print_version();
+            break;
+
+        // Show help
+        case 'h':
+            print_help();
+            break;
+    }   
 
     free(opt);
     return 0;
 }
 
-bool validate_arguments(int argc, struct option opt, int optind) {
+bool validate_arguments(int argc, struct option opt, int optind, int response) {
+
+    // Ensure no errors 
+    if (response == -1 || response == 63) {
+        return false;
+    }
 
     // Validate for no arguments or required arguments
-    if (argc > optind && (opt.has_arg == 0 || opt.has_arg == 1)) {
+    else if (argc > optind && (opt.has_arg == 0 || opt.has_arg == 1)) {
         return false;
     } 
 
