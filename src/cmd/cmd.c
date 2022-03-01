@@ -215,7 +215,7 @@ bool update() {
 }
 
 void print_version() {
-    printf("G-Log / version 1.0.0 / <date>\n");
+    printf("G-Log / version 1.0.0 / 01/03/22\n");
 }
 
 void print_help() {
